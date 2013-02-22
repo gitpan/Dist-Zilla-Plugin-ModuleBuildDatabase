@@ -1,0 +1,14 @@
+Build.PL
+Changes
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README
+corpus/DZT/lib/DZT.pm
+dist.ini
+lib/Dist/Zilla/Plugin/ModuleBuildDatabase.pm
+t/basic.t
+t/options.t
+t/use.t
