@@ -6,7 +6,7 @@ use v5.10;
 extends 'Dist::Zilla::Plugin::ModuleBuild';
 
 # ABSTRACT: build a Build.PL that uses Module::Build::Database
-our $VERSION = '0.01'; # VERSION
+our $VERSION = '0.02'; # VERSION
 
 
 has '+mb_class' => ( default => 'Module::Build::Database' );
@@ -64,6 +64,7 @@ around BUILDARGS => sub {
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -72,7 +73,7 @@ Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses Module::Bu
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -80,7 +81,7 @@ version 0.01
  mbd_database_type = PostgreSQL
  mbd_database_options.name = my_database_name
  mbd_database_options.schema = my_schema_name
- database_extensions.postgis.schema = public
+ mbd_database_extensions.postgis.schema = public
 
 =head1 DESCRIPTION
 
@@ -114,8 +115,8 @@ Database extensions.  This is a hash reference.  This must be specified using th
 =head1 SEE ALSO
 
 L<Dist::Zilla::Plugin::ModuleBuild>,
-L<Module::Build::Database>
-L<Module::Build::Database::PostgreSQL>
+L<Module::Build::Database>,
+L<Module::Build::Database::PostgreSQL>,
 L<Module::Build::Database::SQLite>
 
 =head1 AUTHOR
@@ -130,4 +131,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
