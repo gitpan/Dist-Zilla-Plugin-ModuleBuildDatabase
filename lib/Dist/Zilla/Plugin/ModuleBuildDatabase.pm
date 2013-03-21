@@ -6,7 +6,7 @@ use v5.10;
 extends 'Dist::Zilla::Plugin::ModuleBuild';
 
 # ABSTRACT: build a Build.PL that uses Module::Build::Database
-our $VERSION = '0.02'; # VERSION
+our $VERSION = '0.03'; # VERSION
 
 
 has '+mb_class' => ( default => 'Module::Build::Database' );
@@ -73,7 +73,7 @@ Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses Module::Bu
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 

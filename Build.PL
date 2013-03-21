@@ -12,7 +12,6 @@ my %module_build_args = (
     "Test::More" => "0.88"
   },
   "configure_requires" => {
-    "ExtUtils::MakeMaker" => "6.30",
     "Module::Build" => "0.3601"
   },
   "dist_abstract" => "build a Build.PL that uses Module::Build::Database",
@@ -20,7 +19,7 @@ my %module_build_args = (
     "Graham Ollis <plicease\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-Plugin-ModuleBuildDatabase",
-  "dist_version" => "0.02",
+  "dist_version" => "0.03",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Plugin::ModuleBuildDatabase",
   "recommends" => {},

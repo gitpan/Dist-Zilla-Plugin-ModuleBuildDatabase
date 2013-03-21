@@ -1,7 +1,7 @@
 
 
 This archive contains the distribution Dist-Zilla-Plugin-ModuleBuildDatabase,
-version 0.02:
+version 0.03:
 
   build a Build.PL that uses Module::Build::Database
 

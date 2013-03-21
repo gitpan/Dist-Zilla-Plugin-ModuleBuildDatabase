@@ -7,10 +7,9 @@ build_requires:
   Test::DZil: 0
   Test::More: 0.88
 configure_requires:
-  ExtUtils::MakeMaker: 6.30
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300029, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300031, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -23,4 +22,7 @@ requires:
   Dist::Zilla::Plugin::ModuleBuild: 0
   Moose: 0
   perl: v5.10.0
-version: 0.02
+resources:
+  bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-ModuleBuildDatabase
+  homepage: http://perl.wdlabs.com/dist/Dist-Zilla-Plugin-ModuleBuildDatabase/
+version: 0.03
