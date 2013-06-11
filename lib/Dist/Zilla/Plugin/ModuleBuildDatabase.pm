@@ -2,11 +2,16 @@ package Dist::Zilla::Plugin::ModuleBuildDatabase;
 
 use Moose;
 use v5.10;
+use File::chdir;
+use Path::Class::Dir;
+use AnyEvent;
+use AnyEvent::Open3::Simple;
+use File::Copy qw( copy );
 
 extends 'Dist::Zilla::Plugin::ModuleBuild';
 
 # ABSTRACT: build a Build.PL that uses Module::Build::Database
-our $VERSION = '0.03'; # VERSION
+our $VERSION = '0.03_01'; # VERSION
 
 
 has '+mb_class' => ( default => 'Module::Build::Database' );
@@ -21,6 +26,12 @@ has 'mbd_extra_options' => (
   isa     => 'HashRef',
   is      => 'rw',
   default => sub { { } },
+);
+
+has '_notified' => (
+  isa     => 'Int',
+  is      => 'rw',
+  default => 0,
 );
 
 around module_build_args => sub {
@@ -61,10 +72,112 @@ around BUILDARGS => sub {
   $class->$orig($args);
 };
 
+sub mbd_build
+{
+  my($self, $opt, $args) = @_;
+  
+  my $build_root = $opt->in 
+  ? Path::Class::Dir->new($opt->in) 
+  : $self->zilla->root->subdir('.build', 'mbd');
+  
+  if(-d $build_root)
+  {
+    $self->log("using existing build: $build_root");
+    $self->log("(run dzil clean to start from scratch)");
+  }
+  else
+  {
+    $self->log("mkdir -p $build_root");
+    $build_root->mkpath;
+    $self->log("building in $build_root");
+    $self->zilla->build_in($build_root);
+    $self->_run_in($build_root, [$^X, 'Build.PL']);
+  }
+  $self->_run_in($build_root, ['./Build', @$args]);
+  $self->_recurse($self->zilla->root->subdir('db'), $build_root->subdir('db'));
+}
+
+sub _run_in
+{
+  my($self, $dir, $cmd) = @_;
+  
+  local $CWD = $dir;
+  $self->log("% @$cmd");
+  
+  my $done = AnyEvent->condvar;
+  
+  my $ipc = AnyEvent::Open3::Simple->new(
+    on_stdout => sub {
+      my($proc, $line) = @_;
+      $self->log("out: $line");
+    },
+    on_stderr => sub {
+      my($proc, $line) = @_;
+      $self->log("err: $line");
+    },
+    on_error => sub {
+      my($error) = @_;
+      $self->log("error starting process: $error");
+      $done->send(1);
+    },
+    on_exit => sub {
+      my($proc, $exit, $sig) = @_;
+      $self->log("exit: $exit") if $exit;
+      $self->log("signal: $sig") if $sig;
+      $done->send($exit || $sig);
+    },
+  );
+  $ipc->run(@$cmd);
+  $done->recv and $self->log_fatal("command failed");
+}
+
+sub _recurse
+{
+  my($self, $dist_root, $build_root) = @_;
+
+  state $first = 1;
+  
+  foreach my $child ($build_root->children(no_hidden => 1))
+  {
+    my $name = $child->basename;
+    if($child->is_dir)
+    {
+      my $build_dir = $child;
+      my $dist_dir = $dist_root->subdir($name);
+      unless(-d $dist_dir)
+      {
+        $self->_notify;
+        $self->log("create $dist_dir/");
+        $dist_dir->mkpath;
+      }
+      $self->_recurse($dist_dir, $build_dir);
+    }
+    else
+    {
+      my $new = $child;
+      my $new_content = $new->slurp;
+      my $old = $dist_root->file($name);
+      if($new_content ne (eval { $old->slurp } // ''))
+      {
+        $self->_notify;
+        $self->log("copy $new => $old");
+        $old->openw->print($new_content);
+      }
+    }
+  }
+}
+
+sub _notify
+{
+  my($self) = @_;
+  return if $self->_notified;
+  $self->_notified(1);
+  $self->log("importing back:");
+}
+
 1;
 
 __END__
-
 =pod
 
 =head1 NAME
@@ -73,7 +186,7 @@ Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses Module::Bu
 
 =head1 VERSION
 
-version 0.03
+version 0.03_01
 
 =head1 SYNOPSIS
 
@@ -131,3 +244,4 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
+

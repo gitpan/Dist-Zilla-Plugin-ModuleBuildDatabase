@@ -19,14 +19,20 @@ my %module_build_args = (
     "Graham Ollis <plicease\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-Plugin-ModuleBuildDatabase",
-  "dist_version" => "0.03",
+  "dist_version" => "0.03_01",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Plugin::ModuleBuildDatabase",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "AnyEvent" => 0,
+    "AnyEvent::Open3::Simple" => 0,
+    "Dist::Zilla::App" => 0,
     "Dist::Zilla::Plugin::ModuleBuild" => 0,
+    "File::Copy" => 0,
+    "File::chdir" => 0,
     "Moose" => 0,
+    "Path::Class::Dir" => 0,
     "perl" => "v5.10.0"
   },
   "script_files" => []
