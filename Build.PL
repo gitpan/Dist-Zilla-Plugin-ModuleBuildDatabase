@@ -19,7 +19,7 @@ my %module_build_args = (
     "Graham Ollis <plicease\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-Plugin-ModuleBuildDatabase",
-  "dist_version" => "0.03_01",
+  "dist_version" => "0.03_02",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Plugin::ModuleBuildDatabase",
   "recommends" => {},
@@ -38,6 +38,11 @@ my %module_build_args = (
   "script_files" => []
 );
 
+
+if ( $^O eq 'MSWin32' ) {
+delete	$module_build_args{requires}{'AnyEvent'};
+delete	$module_build_args{requires}{'AnyEvent::Open3::Simple'};
+}
 
 my $build = Module::Build->new(%module_build_args);
 

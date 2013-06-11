@@ -4,14 +4,12 @@ use Moose;
 use v5.10;
 use File::chdir;
 use Path::Class::Dir;
-use AnyEvent;
-use AnyEvent::Open3::Simple;
 use File::Copy qw( copy );
 
 extends 'Dist::Zilla::Plugin::ModuleBuild';
 
 # ABSTRACT: build a Build.PL that uses Module::Build::Database
-our $VERSION = '0.03_01'; # VERSION
+our $VERSION = '0.03_02'; # VERSION
 
 
 has '+mb_class' => ( default => 'Module::Build::Database' );
@@ -104,6 +102,11 @@ sub _run_in
   local $CWD = $dir;
   $self->log("% @$cmd");
   
+  return $self->_run_in_mswin32($dir, $cmd) if $^O eq 'MSWin32';
+  
+  require AnyEvent;
+  require AnyEvent::Open3::Simple;
+  
   my $done = AnyEvent->condvar;
   
   my $ipc = AnyEvent::Open3::Simple->new(
@@ -129,6 +132,12 @@ sub _run_in
   );
   $ipc->run(@$cmd);
   $done->recv and $self->log_fatal("command failed");
+}
+
+sub _run_in_mswin32
+{
+  my($self, $dir, $cmd) = @_;
+  system(@$cmd) and $self->log_fatal("command failed");
 }
 
 sub _recurse
@@ -186,7 +195,7 @@ Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses Module::Bu
 
 =head1 VERSION
 
-version 0.03_01
+version 0.03_02
 
 =head1 SYNOPSIS
 

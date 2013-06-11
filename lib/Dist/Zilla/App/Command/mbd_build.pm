@@ -6,7 +6,7 @@ use v5.10;
 use Dist::Zilla::App -command;
 
 # ABSTRACT: run Module::Build::Database commands
-our $VERSION = '0.03_01'; # VERSION
+our $VERSION = '0.03_02'; # VERSION
 
 
 sub abstract { 'run Module::Build::Database commands' }
@@ -41,7 +41,7 @@ Dist::Zilla::App::Command::mbd_build - run Module::Build::Database commands
 
 =head1 VERSION
 
-version 0.03_01
+version 0.03_02
 
 =head1 SYNOPSIS
 

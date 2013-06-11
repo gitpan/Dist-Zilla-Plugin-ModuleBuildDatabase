@@ -8,7 +8,7 @@ build_requires:
   Test::More: 0.88
 configure_requires:
   Module::Build: 0.3601
-dynamic_config: 0
+dynamic_config: 1
 generated_by: 'Dist::Zilla version 4.300021, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
@@ -31,4 +31,4 @@ requires:
 resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-ModuleBuildDatabase
   homepage: http://perl.wdlabs.com/dist/Dist-Zilla-Plugin-ModuleBuildDatabase/
-version: 0.03_01
+version: 0.03_02
