@@ -19,7 +19,7 @@ my %module_build_args = (
     "Graham Ollis <plicease\@cpan.org>"
   ],
   "dist_name" => "Dist-Zilla-Plugin-ModuleBuildDatabase",
-  "dist_version" => "0.03_02",
+  "dist_version" => "0.04",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Plugin::ModuleBuildDatabase",
   "recommends" => {},

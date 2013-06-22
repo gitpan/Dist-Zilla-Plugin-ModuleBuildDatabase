@@ -9,7 +9,7 @@ use File::Copy qw( copy );
 extends 'Dist::Zilla::Plugin::ModuleBuild';
 
 # ABSTRACT: build a Build.PL that uses Module::Build::Database
-our $VERSION = '0.03_02'; # VERSION
+our $VERSION = '0.04'; # VERSION
 
 
 has '+mb_class' => ( default => 'Module::Build::Database' );
@@ -195,7 +195,7 @@ Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses Module::Bu
 
 =head1 VERSION
 
-version 0.03_02
+version 0.04
 
 =head1 SYNOPSIS
 
