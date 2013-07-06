@@ -1,13 +1,55 @@
+NAME
+    Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses
+    Module::Build::Database
 
+VERSION
+    version 0.05
 
-This archive contains the distribution Dist-Zilla-Plugin-ModuleBuildDatabase,
-version 0.04:
+SYNOPSIS
+     [ModuleBuildDatabase]
+     mbd_database_type = PostgreSQL
+     mbd_database_options.name = my_database_name
+     mbd_database_options.schema = my_schema_name
+     mbd_database_extensions.postgis.schema = public
 
-  build a Build.PL that uses Module::Build::Database
+DESCRIPTION
+    This plugin is a very light layer over Dist::Zilla::Plugin::ModuleBuild
+    to support some of the eccentricities of Module::Build::Database. It
+    allows you to specify the "database_type", "database_options" and
+    "database_extensions" in your "dist.ini". It also set the mb_class to
+    Module::Build::Database.
 
-This software is copyright (c) 2013 by NASA GSFC.
+ATTRIBUTES
+    This plugin understands all the attributes supported by
+    Dist::Zilla::Plugin::ModuleBuild, with the minor caveat that the default
+    for "mb_class" is Module::Build::Database instead of Module::Build. In
+    addition it understands these options:
 
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+  mbd_database_type
+    The type of database. Any value supported by Module::Build::Database,
+    which is, as of this writing either "PostgreSQL" or "SQLite". The
+    details and ramifications of using specific options are described in the
+    Module::Build::Database::PostgreSQL and Module::Build::Database::SQLite
+    documentation.
 
+  mbd_database_options
+    Database options. This is a hash reference. This must be specified using
+    the dot notation as in the example above.
+
+  mbd_database_extensions
+    Database extensions. This is a hash reference. This must be specified
+    using the dot notation as in the example above.
+
+SEE ALSO
+    Dist::Zilla::Plugin::ModuleBuild, Module::Build::Database,
+    Module::Build::Database::PostgreSQL, Module::Build::Database::SQLite
+
+AUTHOR
+    Graham Ollis <plicease@cpan.org>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2013 by NASA GSFC.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 

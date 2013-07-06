@@ -52,11 +52,15 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "mailto" : "bug-Dist-Zilla-Plugin-ModuleBuildDatabase@rt.cpan.org",
-         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-ModuleBuildDatabase"
+         "web" : "https://github.com/plicease/dist-zilla-plugin-modulebuilddatabase/issues"
       },
-      "homepage" : "http://perl.wdlabs.com/dist/Dist-Zilla-Plugin-ModuleBuildDatabase/"
+      "homepage" : "http://perl.wdlabs.com/Dist-Zilla-Plugin-ModuleBuildDatabase/",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/plicease/dist-zilla-plugin-modulebuilddatabase.git",
+         "web" : "https://github.com/plicease/dist-zilla-plugin-modulebuilddatabase"
+      }
    },
-   "version" : "0.04"
+   "version" : "0.05"
 }
 
